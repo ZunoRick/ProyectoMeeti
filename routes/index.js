@@ -1,14 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const homeController = require('../controllers/homeController');
+const usuariosController = require('../controllers/usuariosController');
 
 module.exports = function(){
-    router.get('/', (req, res) =>{
-        res.render('home');
-    });
+    router.get('/', homeController.home);
 
-    router.get('/crear-cuenta', (req, res) =>{
-        res.render('crear-cuenta');
-    });
+    router.get('/crear-cuenta', usuariosController.formCrearCuenta);
 
     return router;
 }
