@@ -4,10 +4,12 @@ const path = require('path');
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const passport = require('./config/passport');
 const router = require('./routes');
 
 //Configuración y modelos
 const db = require('./config/db');
+const { password } = require('pg/lib/defaults');
 require('./models/Usuarios');
 db.sync()
   .then(() => console.log('DB Conectada'))
@@ -42,6 +44,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+
+//Inicializar passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Agrega flash messages
 app.use(flash());
