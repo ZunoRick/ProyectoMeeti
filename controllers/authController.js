@@ -6,3 +6,16 @@ exports.autenticarUsuario = passport.authenticate('local', {
     failureFlash: true,
     badRequestMessage: 'Ambos campos son obligatorios'
 });
+
+//Revisa si el usuario está autenticado o no
+exports.usuarioAutenticado = (req, res, next) =>{
+    //Sí el usuario está autenticado
+    // if (req.isAuthenticated()) {
+    //     return next();        
+    // }
+
+    // //Si no está autenticado
+    // return res.redirect('/iniciar-sesion');
+
+    return (req.isAuthenticated() ? next() : res.redirect('/iniciar-sesion'));
+}

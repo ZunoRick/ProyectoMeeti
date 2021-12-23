@@ -11,6 +11,8 @@ const router = require('./routes');
 const db = require('./config/db');
 const { password } = require('pg/lib/defaults');
 require('./models/Usuarios');
+require('./models/Categorias');
+require('./models/Grupos');
 db.sync()
   .then(() => console.log('DB Conectada'))
   .catch(error => console.log(error));
