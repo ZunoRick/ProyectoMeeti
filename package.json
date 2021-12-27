@@ -4,7 +4,9 @@
   "description": "Proyecto Meeti con Node, PostgreSQL y EJS",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./index.js"
+    "dev": "nodemon ./index.js",
+    "start": "concurrently \"npm run dev\" \"npm run watch\"",
+    "watch": "webpack -w --mode development"
   },
   "repository": {
     "type": "git",
@@ -17,10 +19,16 @@
   },
   "homepage": "https://github.com/ZunoRick/ProyectoMeeti#readme",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "babel-loader": "^8.2.3",
+    "nodemon": "^2.0.15",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "concurrently": "^6.5.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^10.0.0",
@@ -29,6 +37,7 @@
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.17.2",
     "express-validator": "^6.14.0",
+    "leaflet-geosearch": "^2.7.0",
     "multer": "^1.4.4",
     "nodemailer": "^6.7.2",
     "passport": "^0.5.2",
