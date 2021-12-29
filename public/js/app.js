@@ -1,9 +1,46 @@
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
-const lat = 19.431489652210328;
-const lng = -99.14164990123597;
+
+//obtener valores de la base de datos
+
+const lat = document.querySelector('#lat').value || 19.431489652210328;
+const lng = document.querySelector('#lng').value || -99.14164990123597;
+const direccion = document.querySelector('#direccion').value || '';
 const map = L.map('map').setView([lat, lng], 15);
+
 let markers = new L.FeatureGroup().addTo(map);
 let marker;
+
+//Utilizar el provider y GeoCoder
+const geocodeService = L.esri.Geocoding.geocodeService();
+
+//Colocar el Pin en Edición
+if (lat && lng) {
+    marker = new L.marker([lat, lng], {
+        draggable: true,
+        autoPan: true
+    })
+    .addTo(map)
+    .bindPopup(direccion)
+    .openPopup();
+
+    //asignar al contenedor markers
+    markers.addLayer(marker);
+
+    //detectar movimiento del marker
+    marker.on('moveend', function(e) {
+        marker =  e.target;
+        const posicion = marker.getLatLng();
+        map.panTo(new L.LatLng(posicion.lat, posicion.lng));
+
+        //Reverse Geocoding, cuando el usuario reubica el pin
+        geocodeService.reverse().latlng(posicion, 15).run(function(error, result){
+            llenarInputs(result);
+
+            //asigna los valores al popup del marker
+            marker.bindPopup(result.address.LongLabel);
+        });
+    });
+}
 
 // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -29,8 +66,6 @@ function buscarDireccion(e) {
         //Si existe un pin anterior, limpiarlo
         markers.clearLayers();
 
-        //Utilizar el provider y GeoCoder
-        const geocodeService = L.esri.Geocoding.geocodeService();
         const provider = new OpenStreetMapProvider();
         provider.search({ query: e.target.value})
             .then(resultado => { 

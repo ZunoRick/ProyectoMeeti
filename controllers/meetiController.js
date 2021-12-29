@@ -71,3 +71,113 @@ exports.sanitizarMeeti = async(req, res, next) =>{
         
     }
 }
+
+exports.formEditarMeeti = async (req, res, next) =>{
+    const consultas = [];
+
+    consultas.push(Meeti.findByPk(req.params.id));
+    consultas.push(Grupos.findAll({ where: {
+        usuarioId: req.user.id
+    } }));
+
+    //Return a promise
+    const [meeti, grupos] = await Promise.all(consultas);
+
+    if (!grupos || !meeti) {
+        req.flash('error', 'Operación no válida');
+        res.redirect('/administracion');
+        return next();
+    }
+
+    //Mostrar la vista
+    res.render('editar-meeti', {
+        nombrePagina: `Editar Meeti: ${meeti.titulo}`,
+        meeti,
+        grupos
+    });
+}
+
+//Guarda los cambios en el meeti
+exports.editarMeeti = async (req, res, next) => {
+    const meeti = await Meeti.findOne({
+        where: { 
+            id: req.params.id,
+            usuarioId: req.user.id
+        }
+    });
+
+    if (!meeti) {
+        req.flash('error', 'Operación no válida');
+        res.redirect('/administracion');
+        return next();
+    }
+
+    //Asignar los valores
+    const { grupoId, titulo, invitado, fecha, hora, cupo, descripcion, direccion, ciudad, estado, pais, lat, lng } = req.body;
+
+    meeti.grupoId = grupoId;
+    meeti.titulo = titulo;
+    meeti.invitado = invitado;
+    meeti.fecha = fecha;
+    meeti.hora = hora;
+    meeti.cupo = cupo;
+    meeti.descripcion = descripcion;
+    meeti.direccion = direccion;
+    meeti.ciudad = ciudad;
+    meeti.estado = estado;
+    meeti.pais = pais;
+
+    //Asignar el Point
+    const point = { type: 'Point', coordinates: [parseFloat(lat), parseFloat(lng)]};
+    meeti.ubicacion = point;
+
+    //almacenar en la BD
+    await meeti.save();
+    req.flash('exito', 'Cambios Guardados Correctamente');
+    res.redirect('/administracion');
+}
+
+exports.formEliminarMeeti = async (req, res, next) =>{
+    try {
+        const meeti = await Meeti.findOne({
+            where: {
+                id: req.params.id,
+                usuarioId: req.user.id
+            }
+        });
+        //Todo bien, ejecutar la vista
+        res.render('eliminar-meeti', {
+            nombrePagina: `Eliminar Meeti: ${meeti.titulo}`
+        });
+    } catch (error) {
+        req.flash('error', 'Operación no válida');
+        res.redirect('/administracion');
+        return next();
+    }
+}
+
+exports.eliminarMeeti = async(req, res, next) => {
+    try {
+        const meeti = await Meeti.findOne({
+            where: {
+                id: req.params.id,
+                usuarioId: req.user.id
+            }
+        });
+        
+        //Eliminar el meeti
+        await Meeti.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
+    
+        //Redireccionar al usuario
+        req.flash('exito', `Meeti ${meeti.titulo} Eliminado`);
+        res.redirect('/administracion');
+    } catch (error) {
+        req.flash('error', error);
+        res.redirect('/administracion');
+        return next();
+    }
+}
