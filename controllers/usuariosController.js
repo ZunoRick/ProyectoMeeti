@@ -124,9 +124,13 @@ exports.confirmarCuenta = async (req, res, next) =>{
 
 //Formulario para iniciar sesión 
 exports.formIniciarSesion = (req, res) =>{
-    res.render('iniciar-sesion', {
-        nombrePagina: 'Inicia Sesión'
-    });
+    if (!req.user) {
+        res.render('iniciar-sesion', {
+            nombrePagina: 'Inicia Sesión'
+        });
+    } else{
+        res.redirect('/administracion');
+    }
 }
 
 //Muestra el formulario para editar el perfil
