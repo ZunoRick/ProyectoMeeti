@@ -11,8 +11,7 @@ const Meeti = db.define('meeti', {
     id:{
         type: Sequelize.UUID,
         primaryKey: true,
-        allowNull: false,
-        defaultValue: uuid()
+        allowNull: false
     },
     titulo: {
         type: Sequelize.STRING,

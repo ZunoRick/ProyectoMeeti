@@ -12,13 +12,18 @@ exports.panelAdministracion = async(req, res) =>{
         where: { usuarioId: req.user.id }
     }));
 
+    //Próximos meetis
     consultas.push( Meeti.findAll({
         where: { 
             usuarioId: req.user.id,
             fecha: { [Op.gte] : moment(new Date).format("YYYY-MM-DD") }
-        }
+        },
+        order: [
+            ['fecha', 'ASC']
+        ]
     }));
 
+    //Meetis anteriores
     consultas.push( Meeti.findAll({
         where: { 
             usuarioId: req.user.id,

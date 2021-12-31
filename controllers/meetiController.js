@@ -1,6 +1,7 @@
 const Grupos = require('../models/Grupos');
 const Meeti = require('../models/Meeti');
 const { body, validationResult } = require('express-validator');
+const uuid = require('uuid').v4;
 
 //Muestra el formulario para nuevos Meeti
 exports.formNuevoMeeti = async (req, res) =>{
@@ -30,6 +31,8 @@ exports.crearMeeti = async(req, res) =>{
     if (req.body.cupo === '') {
         meeti.cupo = 0;
     }
+
+    meeti.id = uuid();
 
     //Almacnar en la BD
     try {
