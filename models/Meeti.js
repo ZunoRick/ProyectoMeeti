@@ -1,6 +1,5 @@
 const { Sequelize } = require('sequelize');
 const db = require('../config/db');
-const uuid = require('uuid').v4;
 const slug = require('slug');
 const shortid = require('shortid');
 

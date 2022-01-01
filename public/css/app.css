@@ -382,10 +382,12 @@ main.contenedor-formularios {
     flex: 1;
 }
 .default-form legend {
+    display: flex;
     color: #068D9D;
     font-size: 1.6rem;
     font-weight: 700;
     margin: 2.5rem 0;
+    justify-content: center;
 }
 .default-form.comentarios .campo {
     align-items: flex-start;   
@@ -410,6 +412,11 @@ trix-editor h1 {
     align-self: flex-start;
     padding-top: 4rem;
 }
+
+.descripcion{
+    line-height: 2;
+}
+
 trix-toolbar, 
 trix-editor {
     background-color: white!important;
@@ -522,6 +529,7 @@ trix-toolbar .trix-button--icon-strike {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 20rem;
 }
 .pregunta-asistencia p {
     font-size: 2rem;
@@ -595,11 +603,15 @@ trix-toolbar .trix-button--icon-strike {
     padding: 2rem;
     border: 1px solid #C7C7C7;
     background-color: white;
+    flex: 1;
 }
 .comentario .texto p {
     margin: 0;
 }
 
+.comentario .texto p > span {
+    font-weight: bold;
+}
 
 /** Sidebar **/
 .contenido-evento aside {
@@ -636,4 +648,9 @@ aside img {
 .leaflet-container {
     width: 100%;
     height: 100%;
+}
+
+#ubicacion-meeti{
+    height: 400px;
+    width: 85%;
 }

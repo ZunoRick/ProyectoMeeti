@@ -19,7 +19,9 @@
 						<% moment.locale('es'); %> 
 						<% const fecha = meet.fecha + ' ' + meet.hora; %> 
 						<p class="fecha"><%= moment(fecha).format('LLLL') %> Horas</p>
-						<h3><%= meet.titulo %></h3>
+						<a href="/meeti/<%= meet.slug %>" target="_blank">
+							<h3><%= meet.titulo %></h3>
+						</a>
 						<small><%= meet.interesados.length %> Interesados</small>
 					</div>
 	

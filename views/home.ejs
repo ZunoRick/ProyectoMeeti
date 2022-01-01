@@ -39,7 +39,7 @@
 
                         <div class="info-autor">
                             <% if (meeti.usuario.imagen) { %>
-                                <div >
+                                <div>
                                     <img src="/uploads/perfiles/<%= meeti.usuario.imagen%>" class="imagen">
                                 </div>
                             <% } else { %>
@@ -48,7 +48,7 @@
                             <% } %>
                             <div class="informacion">
                                 <p>Organizado por:</p>
-                                <p class="autor">Juan Pablo De la torre Valdez</p>
+                                <p class="autor"><%= meeti.usuario.nombre %> </p>
                             </div>
                         </div>
                     </div>

@@ -114,16 +114,16 @@ exports.editarMeeti = async (req, res, next) => {
         res.redirect('/administracion');
         return next();
     }
-
+    
     //Asignar los valores
-    const { grupoId, titulo, invitado, fecha, hora, cupo, descripcion, direccion, ciudad, estado, pais, lat, lng } = req.body;
+    const { grupoId, titulo, invitado, fecha, hora, descripcion, direccion, ciudad, estado, pais, lat, lng } = req.body;
 
     meeti.grupoId = grupoId;
     meeti.titulo = titulo;
     meeti.invitado = invitado;
     meeti.fecha = fecha;
     meeti.hora = hora;
-    meeti.cupo = cupo;
+    meeti.cupo = (req.body.cupo === '') ? 0 : req.body.cupo;
     meeti.descripcion = descripcion;
     meeti.direccion = direccion;
     meeti.ciudad = ciudad;
@@ -135,9 +135,13 @@ exports.editarMeeti = async (req, res, next) => {
     meeti.ubicacion = point;
 
     //almacenar en la BD
-    await meeti.save();
-    req.flash('exito', 'Cambios Guardados Correctamente');
-    res.redirect('/administracion');
+    try {
+        await meeti.save();
+        req.flash('exito', 'Cambios Guardados Correctamente');
+        res.redirect('/administracion');
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 exports.formEliminarMeeti = async (req, res, next) =>{

@@ -9,7 +9,6 @@ const router = require('./routes');
 
 //Configuración y modelos
 const db = require('./config/db');
-const { password } = require('pg/lib/defaults');
 require('./models/Usuarios');
 require('./models/Categorias');
 require('./models/Grupos');
