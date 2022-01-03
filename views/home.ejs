@@ -28,7 +28,11 @@
         <% if (meetis.length > 0) { %>
             <% meetis.forEach(meeti => { %>
                 <div class="card">
-                    <img src="/uploads/grupos/<%= meeti.grupo.imagen %>">
+                    <% if (meeti.grupo.imagen) { %>
+                        <img src="/uploads/grupos/<%= meeti.grupo.imagen %>">
+                    <% } else { %>
+                        <img src="/img/meeti.jpg">
+                    <% } %> 
                     <div class="card-texto">
                         <% moment.locale('es') %>
                         <% const fecha = `${meeti.fecha} ${meeti.hora}` %> 
