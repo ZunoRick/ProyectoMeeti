@@ -10,6 +10,7 @@ const meetiController = require('../controllers/meetiController');
 const meetiControllerFE = require('../controllers/frontend/meetiControllerFE');
 const usuariosControllerFE = require('../controllers/frontend/usuariosControllerFE');
 const gruposControllerFE = require('../controllers/frontend/gruposControllerFE');
+const comentariosControllerFE = require('../controllers/frontend/comentariosControllerFE');
 
 module.exports = function(){
     /* AREA PÚBLICA */
@@ -18,6 +19,16 @@ module.exports = function(){
     //Muestra un Meeti
     router.get('/meeti/:slug', 
         meetiControllerFE.mostrarMeeti
+    );
+
+    //Agrega Comentarios en el Meeti
+    router.post('/meeti/:id',
+        comentariosControllerFE.agregarComentario
+    );
+
+    //Elimina comentarios en el Meeti
+    router.post('/eliminar-comentario', 
+        comentariosControllerFE.eliminarComentario
     );
 
     //Confirma Asistencia a Meeti

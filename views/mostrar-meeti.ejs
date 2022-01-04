@@ -61,39 +61,55 @@
 
             <div class="comentarios">
                 <h2>Comentarios</h2>
-                <div class="comentario">
-                    <div class="imagen">
+                <% if (comentarios.length > 0) { %>
+                    <% comentarios.forEach(comentario => { %>
+                        <div class="comentario">
+                            <div class="imagen">
+                                <% if (comentario.usuario.imagen) { %>
+                                    <img class="imagen" src="/uploads/perfiles/<%= comentario.usuario.imagen %>">
+                                <% } %>
+                            </div>
+                            <div class="texto">
+                                <p><%= comentario.mensaje %></p>
+                                <p>Escrito por: 
+                                    <span>
+                                        <a href="/usuarios/<%= comentario.usuario.id %>">
+                                            <%= comentario.usuario.nombre %> 
+                                        </a>
+                                    </span>
+                                </p>
 
-                    </div>
-                    <div class="texto">
-                        <p>Hola</p>
-                        <p>Escrito por: <span> Ricardo Zuno</span></p>
-                        <input type="button" value="Eliminar" class="btn btn-azul">
-                    </div>
-                </div>
-
-                <div class="comentario">
-                    <div class="imagen">
-
-                    </div>
-                    <div class="texto">
-                        <p>Hola</p>
-                        <p>Escrito por: <span> Ricardo Zuno</span></p>
-                    </div>
-                </div>
+                                <% if (comentario.usuarioId === usuario.id || meeti.usuarioId === usuario.id) { %>
+                                    <form action="/eliminar-comentario" method="post" class="eliminar-comentario">
+                                        <input type="hidden" name="idComentario" value="<%= comentario.id %>">
+                                        <input type="submit" value="Eliminar" class="btn btn-azul">
+                                    </form>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>No hay comentarios aún 😔</p>
+                <% } %>
 
                 <!-- Formulario-comentarios-->
-                <form action="#" class="default-form comentarios">
-                    <legend>Agrega un comentario</legend>
-                    <div class="campo">
-                        <label>Comentario: </label>
-                        <textarea name="comentario"></textarea>
-                    </div>
-                    <div class="campo enviar">
-                        <input type="submit" value="Enviar" class="btn btn-rosa">
-                    </div>
-                </form>
-                <!-- /Formulario-comentarios-->
+                <% if (usuario.id) { %>
+                    <form action="/meeti/<%= meeti.id %>" method="post" class="default-form comentarios">
+                        <legend>Agrega un comentario</legend>
+                        <div class="campo">
+                            <label>Comentario: </label>
+                            <textarea name="comentario"></textarea>
+                        </div>
+                        <div class="campo enviar">
+                            <input type="submit" value="Enviar" class="btn btn-rosa">
+                        </div>
+                    </form>
+                    <!-- /Formulario-comentarios-->
+                <% } else { %>
+                    <a href="/iniciar-sesion">
+                        <p>Inicia Sesión para Agregar un comentario</p>
+                    </a>
+                <% } %>
             </div> <!-- .comentarios-->
         </div> <!-- .informacion-evento-->
 
