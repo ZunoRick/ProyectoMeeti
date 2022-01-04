@@ -40,6 +40,11 @@ module.exports = function(){
         gruposControllerFE.mostrarGrupo
     );
 
+    //Muestra Meetis por categoria
+    router.get('/categoria/:categoria',
+        meetiControllerFE.mostrarCategoria
+    );
+
     //Crear y confirmar cuentas
     router.get('/crear-cuenta', usuariosController.formCrearCuenta);
     router.post('/crear-cuenta', usuariosController.crearNuevaCuenta);

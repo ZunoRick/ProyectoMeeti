@@ -3,6 +3,7 @@ const Grupos = require('../../models/Grupos');
 const Usuarios = require('../../models/Usuarios');
 const moment = require('moment');
 const { Sequelize } = require('../../config/db');
+const Categorias = require('../../models/Categorias');
 
 exports.mostrarMeeti = async (req, res) => {
     const meeti = await Meeti.findOne({
@@ -89,5 +90,33 @@ exports.mostrarAsistentes = async (req, res) =>{
     res.render('asistentes-meeti', {
         nombrePagina: 'Listado Asistentes Meeti',
         asistentes
+    });
+}
+
+exports.mostrarCategoria = async (req, res, next) =>{
+    const categoria = await Categorias.findOne({
+        where: {
+            slug: req.params.categoria
+        },
+        attributes: ['id', 'nombre']
+    });
+
+    const meetis = await Meeti.findAll({
+        order: [
+            ['fecha', 'ASC'],
+            ['hora', 'ASC']
+        ],
+        include: [{
+            model: Grupos,
+            where: { categoriaId : categoria.id }
+        }, {
+            model: Usuarios
+        }]
+    });
+
+    res.render('categoria', {
+        nombrePagina: `Categoria: ${categoria.nombre}`,
+        meetis,
+        moment
     });
 }
