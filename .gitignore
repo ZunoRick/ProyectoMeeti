@@ -1,4 +1,4 @@
 variables.env
 node_modules/
-public/uploads/grupos/*
-public/uploads/perfiles/*
+public/uploads/grupos/*.jpeg
+public/uploads/perfiles/*.jpeg
