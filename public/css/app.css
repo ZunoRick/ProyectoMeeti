@@ -784,3 +784,62 @@ div.asistentes h1,
         flex: 1;
     }
 }
+
+.drop-area{
+    border: 5px dashed #ddd;
+    height: 400px;
+    width: 100%;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.drop-area.active{
+    background-color: rgba(89, 149, 238, 0.5);
+    color: black;
+    border: 2px dashed #618ac9;
+}
+
+.drop-area h2{
+    font-size: 30px;
+    color: #fefefe;
+    font-weight: 500;
+}
+
+.drop-area span{
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.drop-area button{
+    padding: 10px 25px;
+    font-size: 20px;
+    border: 0;
+    outline: none;
+    background-color: #003fa8;
+    color: #fefefe;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.file-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: solid 1px #ddd;
+}
+
+#preview{
+    margin-top: 10px;
+}
+
+#subir-imagen div:first-of-type + .campo{
+    display: flex;
+    margin: 2rem 2rem 0rem 2rem;
+    align-items: stretch;
+    justify-content: space-evenly;
+}

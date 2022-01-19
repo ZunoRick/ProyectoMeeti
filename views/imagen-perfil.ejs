@@ -1,22 +1,29 @@
 <main class="contenedor contenedor-formularios">
     <h1><%= nombrePagina %> </h1>
-    <form method="post" class="default-form" enctype="multipart/form-data">
+    <form method="post" class="default-form" enctype="multipart/form-data" id="subir-imagen">
         <legend>Sube tu imagen que se mostrará junto a tu nombre y biografía</legend>
-        <div class="campo">
-            <label>Imagen</label>
-            <input type="file" name="imagen">
+        
+        <div>
+            <div class="drop-area">
+                <h3>Arrastra y suelta tu imagen</h3>
+                <span>O</span>
+                <button>Selecciona tu imagen</button>
+                <input type="file" name="imagen" id="input-file" hidden>
+            </div>
         </div>
 
+        <div class="campo">
         <% if (usuario.imagen) { %>
-            <div class="campo">
-                <label>Imagen Actual</label>
-                <img src="/uploads/perfiles/<%= usuario.imagen %> " width="600">
-            </div>
+            <label>Imagen Actual</label>
+            <img src="/uploads/perfiles/<%= usuario.imagen %> " width="400">
         <% } else { %>
             <p>No hay imagen actual</p>
+            <img width="400" hidden>
         <% } %>
+        </div>
+
         <div class="campo enviar">
-            <input type="submit" value="Subir Imagen" class="btn btn-rosa">
+            <input type="submit" value="Guardar Imagen" class="btn btn-rosa">
         </div>
     </form>
 </main>

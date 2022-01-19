@@ -1,6 +1,7 @@
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import asistencia from './asistencia';
 import eliminarComentario from './eliminarComentario';
+import imagenPerfil from './imagenPerfil';
 //obtener valores de la base de datos
 
 const lat = document.querySelector('#lat').value || 19.431489652210328;
